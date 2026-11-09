@@ -1,0 +1,735 @@
+\section{Basic Definition}
+
+\subsection{Action on the extended complex plane}\label{Sec:MF_action}
+$\GL_2(\bbC)$ acts on $\widehat{\bbC}$. For $g = \begin{pmatrix}a & b\\ c & d\end{pmatrix}$ and $z \in \widehat{\bbC}$,
+\[
+    gz \defeq g \cdot z = \begin{cases}
+        \dfrac{az + b}{cz + d}, & z \in \bbC, \ cz + d \ne 0, \\[5pt]
+        \infty, & z \in \bbC, \ cz + d = 0, \\
+        \infty, & z = \infty, \ c = 0, \\
+        \dfrac ac, & z = \infty, \ c \ne 0.
+    \end{cases}
+\]
+\[
+    Z(\GL_2(\bbC)) = \left\{\begin{pmatrix}a & 0\\ 0 & a\end{pmatrix} : a \in \bbC^\times\right\}.
+\]
+\[
+    \calH = \{z \in \bbC : \Im(z) > 0\}, \qquad\text{upper half-plane}.
+\]
+
+\begin{proposition}\label{Prop:MF_imaginary_part}
+    Let $g \in \GL_2(\bbR)$ and $z \in \bbC$. If $cz + d \ne 0$, then
+    \[
+        \Im(gz) = \frac{\det(g)}{|cz + d|^2}\Im(z).
+    \]
+\end{proposition}
+\begin{proof}
+    \begin{align*}
+        \Im(gz)
+        &= \Im\left(\frac{(az + b)(c\bar z + d)}{(cz + d)(c\bar z + d)}\right)\\
+        &= \Im\left(\frac{ac z\bar z + bd + ad z + bc\bar z}{|cz + d|^2}\right)\\
+        &= \frac{ad\Im(z) - bc\Im(z)}{|cz + d|^2}\\
+        &= \frac{(ad - bc)\Im(z)}{|cz + d|^2}.
+    \end{align*}
+\end{proof}
+
+\begin{lemma}\label{Lem:MF_denominator}
+    If $g = \begin{pmatrix}a & b\\ c & d\end{pmatrix} \in \GL_2(\bbR)$ and $z \in \bbC \setminus \bbR$, then $cz + d \ne 0$.
+\end{lemma}
+
+because $\det(g) \ne 0 \Longrightarrow (c, d) \ne (0, 0)$.
+
+\begin{corollary}\label{Cor:MF_half_plane}
+    The action of $\GL_2^+(\bbR)$ on $\widehat{\bbC}$ stabilizes $\calH$.
+\end{corollary}
+
+\subsection{Congruence Subgroups}\label{Sec:MF_congruence}
+For $N \in \bbZ_{\ge 1}$, let
+\[
+    \Gamma(N) = \left\{g = \begin{pmatrix}a & b\\ c & d\end{pmatrix} \in \SL_2(\bbZ) :
+    \begin{pmatrix}a & b\\ c & d\end{pmatrix} \equiv
+    \begin{pmatrix}1 & 0\\ 0 & 1\end{pmatrix}\pmod N\right\}.
+\]
+This is the \termino{principal congruence subgroup of level $N$}.
+
+\begin{proposition}\label{Prop:MF_principal_index}
+    Let $N \ge 1$. Then:
+    \begin{enumerate}[label=(\arabic*)]
+        \item The reduction map
+        \[
+            \pi_N : \SL_2(\bbZ) \longrightarrow \SL_2(\bbZ/N\bbZ)
+        \]
+        is surjective, with kernel $\Gamma(N)$. In particular,
+        \[
+            \SL_2(\bbZ)/\Gamma(N) \cong \SL_2(\bbZ/N\bbZ).
+        \]
+        \item The index of $\Gamma(N)$ in $\SL_2(\bbZ)$ is
+        \[
+            [\SL_2(\bbZ) : \Gamma(N)]
+            = N^3\prod_{p \mid N}\left(1 - \frac{1}{p^2}\right).
+        \]
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item Let $\gamma \in \SL_2(\bbZ/N\bbZ)$. Choose an integral lift
+        \[
+            A = \begin{pmatrix}a & b\\ c & d\end{pmatrix} \in M_2(\bbZ),
+            \qquad A \equiv \gamma\pmod N.
+        \]
+        Consider the set of all lifts
+        \[
+            S = \left\{A + N\begin{pmatrix}k & \ell\\ s & t\end{pmatrix} :
+            k, \ell, s, t \in \bbZ\right\}.
+        \]
+        We want to prove $S \cap \SL_2(\bbZ) \ne \varnothing$.
+
+        \begin{enumerate}[label=\textit{Step~\arabic*.}]
+            \item Find $c'$ and $d'$ with $\gcd(c', d') = 1$.
+            We seek integers $s, t$ such that
+            \[
+                c' = c + sN, \qquad d' = d + tN, \qquad \gcd(c', d') = 1.
+            \]
+            Since $\det\gamma = 1$ in $\bbZ/N\bbZ$, we have
+            \[
+                ad - bc \equiv 1\pmod N.
+            \]
+            Set $g = \gcd(c, d)$. As $g \mid ad - bc$, this implies
+            \[
+                \boxed{\gcd(g, N) = 1.}
+            \]
+            (The case $N = 1$ is immediate, so we may assume $N > 1$.)
+
+            The argument is symmetric in $c$ and $d$. Moreover, $c$ and $d$ cannot both be zero, since $ad - bc \equiv 1\pmod N$. Thus, without loss of generality, assume $c \ne 0$ and take $s = 0$. In other words, put $c' = c$ and look for
+            \[
+                d' = d + tN\qquad\text{with}\qquad\gcd(c, d + tN) = 1.
+            \]
+            By the Chinese remainder theorem, there exists $t \in \bbZ$ such that
+            \[
+                \boxed{\begin{cases}
+                    t \equiv 1\pmod p, & \text{for every prime }p \mid g, \\
+                    t \equiv 0\pmod p, & \text{for every prime }p \mid c\text{ with }p \nmid g.
+                \end{cases}}
+            \]
+            We now check that $\gcd(c, d + tN) = 1$. Let $p$ be any prime divisor of $c$.
+            \begin{itemize}[leftmargin=2em, nosep]
+                \item If $p \mid g$, then $p \mid d$ but $p \nmid N$, since $\gcd(g, N) = 1$. Hence
+                \[
+                    d + tN \equiv N\not \equiv 0\pmod p.
+                \]
+                \item If $p \nmid g$, then $p \nmid d$, and the choice $t \equiv 0\pmod p$ gives
+                \[
+                    d + tN \equiv d\not \equiv 0\pmod p.
+                \]
+            \end{itemize}
+            Thus no prime divisor of $c$ divides $d + tN$, proving
+            \[
+                \boxed{\gcd(c', d') = \gcd(c, d + tN) = 1.}
+            \]
+
+            \item Find $k, \ell \in \bbZ$ to make the determinant equal to $1$.
+            We want to find integers $k, \ell$ such that
+            \[
+                \det\begin{pmatrix}a + kN & b + \ell N\\ c' & d'\end{pmatrix} = 1.
+            \]
+            Since $c' \equiv c$ and $d' \equiv d\pmod N$ and $ad - bc \equiv 1\pmod N$, we have $ad' - bc' \equiv 1\pmod N$. Thus
+            \[
+                m \defeq \frac{1 - (ad' - bc')}{N} \in \bbZ.
+            \]
+            Expanding the determinant, the required equation becomes
+            \[
+                (ad' - bc') + N(kd' - \ell c') = 1,
+                \qquad\text{equivalently}\qquad kd' - \ell c' = m.
+            \]
+            By Step 1, $\gcd(c', d') = 1$. Hence B\'ezout's identity gives $u, v \in \bbZ$ such that $ud' + vc' = 1$. Taking $k = mu$ and $\ell = - mv$ gives $kd' - \ell c' = m$, as required. Therefore
+            \[
+                \begin{pmatrix}a + kN & b + \ell N\\ c' & d'\end{pmatrix}
+                \in S \cap \SL_2(\bbZ).
+            \]
+        \end{enumerate}
+
+        Consequently $S \cap \SL_2(\bbZ) \ne \varnothing$, so $\pi_N$ is surjective. Its kernel is $\Gamma(N)$ by definition; the first isomorphism theorem gives
+        \[
+            \SL_2(\bbZ)/\Gamma(N) \cong \SL_2(\bbZ/N\bbZ).
+        \]
+
+        \item By (1),
+        \[
+            [\SL_2(\bbZ) : \Gamma(N)] = \#\SL_2(\bbZ/N\bbZ).
+        \]
+        Write $N = \prod_{p \mid N}p^{n_p}$. The Chinese remainder theorem gives an isomorphism of rings
+        \[
+            \bbZ/N\bbZ \cong \prod_{p \mid N}\bbZ/p^{n_p}\bbZ.
+        \]
+        which induces a group isomorphism
+        \[
+            \SL_2(\bbZ/N\bbZ) \cong
+            \prod_{p \mid N}\SL_2(\bbZ/p^{n_p}\bbZ).
+        \]
+        It therefore suffices to compute $\#\SL_2(\bbZ/p^e\bbZ)$ for a prime $p$ and $e \ge 1$.
+
+        \begin{enumerate}[label=\textbf{Case~\arabic*}]
+            \item $e > 1$.
+            For $e \ge 2$, consider the reduction homomorphism
+            \[
+                \lambda_e : \SL_2(\bbZ/p^e\bbZ)
+                \longrightarrow \SL_2(\bbZ/p^{e - 1}\bbZ).
+            \]
+            This map is surjective by (1): the surjective reduction $\pi_{p^{e - 1}}$ factors as $\lambda_e \circ \pi_{p^e}$. An element lies in $\ker\lambda_e$ precisely when it has the form
+            \[
+                I + p^{e - 1}A\pmod{p^e}, \qquad A \in M_2(\bbF_p),
+            \]
+            where any integral lift of $A$ may be used. As $2(e - 1) \ge e$,
+            \[
+                \det(I + p^{e - 1}A)
+                \equiv 1 + p^{e - 1}\operatorname{tr}(A)\pmod{p^e}.
+            \]
+            Thus the determinant is $1$ modulo $p^e$ exactly when $\operatorname{tr}(A) = 0$ in $\bbF_p$. Since three entries of $A$ can be chosen freely and the fourth is fixed by the trace condition,
+            \[
+                \#\ker\lambda_e = p^3.
+            \]
+            It follows that
+            \[
+                \#\SL_2(\bbZ/p^e\bbZ)
+                = p^3\#\SL_2(\bbZ/p^{e - 1}\bbZ)
+                = p^{3(e - 1)}\#\SL_2(\bbF_p).
+            \]
+
+            \item $e = 1$.
+            We use the determinant homomorphism:
+            \[
+                1 \longrightarrow \SL_2(\bbF_p)
+                \longrightarrow \GL_2(\bbF_p)
+                \xrightarrow{\ \det\ }\bbF_p^\times
+                \longrightarrow 1.
+            \]
+            It is surjective. To count $\GL_2(\bbF_p)$, choose a nonzero first column ($p^2 - 1$ choices) and then a second column outside its span ($p^2 - p$ choices). Thus
+            \[
+                \#\GL_2(\bbF_p) = (p^2 - 1)(p^2 - p),
+                \qquad \#\bbF_p^\times = p - 1.
+            \]
+            Hence
+            \[
+                \#\SL_2(\bbF_p)
+                = \frac{(p^2 - 1)(p^2 - p)}{p - 1}
+                = p(p^2 - 1)
+                = p^3\left(1 - \frac1{p^2}\right).
+            \]
+        \end{enumerate}
+
+        Consequently,
+        \[
+            \#\SL_2(\bbZ/p^e\bbZ)
+            = p^{3e}\left(1 - \frac1{p^2}\right).
+        \]
+        Taking the product over all primes dividing $N$ proves
+        \[
+            [\SL_2(\bbZ) : \Gamma(N)]
+            = \prod_{p \mid N}p^{3n_p}\left(1 - \frac1{p^2}\right)
+            = \boxed{N^3\prod_{p \mid N}\left(1 - \frac1{p^2}\right)}.
+        \]
+    \end{enumerate}
+\end{proof}
+
+\begin{definition}\label{Def:MF_congruence}
+    A subgroup $\Gamma$ of $\SL_2(\bbZ)$ is a \termino{congruence subgroup} if $\Gamma(N) \subseteq \Gamma$ for some $N$.
+\end{definition}
+\begin{example}
+    \begin{align*}
+        \Gamma_1(N) &= \left\{g = \begin{pmatrix}a & b\\ c & d\end{pmatrix} \in \SL_2(\bbZ) :
+        \begin{pmatrix}a & b\\ c & d\end{pmatrix} \equiv
+        \begin{pmatrix}1 & *\\ 0 & 1\end{pmatrix}\pmod N\right\}, \\
+        \Gamma_0(N) &= \left\{g = \begin{pmatrix}a & b\\ c & d\end{pmatrix} \in \SL_2(\bbZ) :
+        \begin{pmatrix}a & b\\ c & d\end{pmatrix} \equiv
+        \begin{pmatrix}* & *\\ 0 & *\end{pmatrix}\pmod N\right\}.
+    \end{align*}
+    Here $*$ means no condition on the entry.
+    \[
+        \Gamma(N) \subseteq \Gamma_1(N) \subseteq \Gamma_0(N) \subseteq \SL_2(\bbZ).
+    \]
+\end{example}
+
+\begin{proposition}\label{Prop:MF_congruence_quotients}
+    Let $N \in \bbN_{\ge 1}$.
+    \begin{enumerate}[label=\arabic*)]
+        \item The map
+        \[
+            \lambda_1 : \Gamma_1(N) \longrightarrow \bbZ/N\bbZ,
+            \qquad\begin{pmatrix}a & b\\ c & d\end{pmatrix} \longmapsto b\pmod N
+        \]
+        is a surjective group homomorphism with kernel $\Gamma(N)$.
+        \item The map
+        \[
+            \lambda_0 : \Gamma_0(N) \longrightarrow (\bbZ/N\bbZ)^\times,
+            \qquad\begin{pmatrix}a & b\\ c & d\end{pmatrix} \longmapsto d\pmod N
+        \]
+        is a surjective group homomorphism with kernel $\Gamma_1(N)$.
+    \end{enumerate}
+\end{proposition}
+\noindent Indeed,
+\[
+    \lambda_1(gg') = \lambda_1(g) + \lambda_1(g')\pmod N.
+\]
+To see that $\lambda_0$ is well-defined, note that
+\[
+    1 = \det(g) = ad - bc \equiv ad\pmod N
+    \quad \Longrightarrow \quad d \in (\bbZ/N\bbZ)^\times.
+\]
+Also,
+\[
+    \lambda_0(gg') = \lambda_0(g)\lambda_0(g').
+\]
+
+\subsubsection*{Summary} $\SL_2(\bbZ)$ acts on $\calH$.
+\[
+    0 \longrightarrow \Gamma(N) \longrightarrow \SL_2(\bbZ)
+    \longrightarrow \SL_2(\bbZ/N\bbZ) \longrightarrow 0,
+\]
+\[
+    0 \longrightarrow \Gamma(N) \longrightarrow \Gamma_1(N)
+    \longrightarrow \bbZ/N\bbZ \longrightarrow 0,
+\]
+\[
+    0 \longrightarrow \Gamma_1(N) \longrightarrow \Gamma_0(N)
+    \longrightarrow (\bbZ/N\bbZ)^\times\longrightarrow 0.
+\]
+\[
+    \begin{pmatrix}a & b\\ 0 & d\end{pmatrix}
+    \begin{pmatrix}1 & x\\ 0 & 1\end{pmatrix}
+    = \begin{pmatrix}a & ax + b\\ 0 & d\end{pmatrix}.
+\]
+\[
+    \begin{pmatrix}a & b\\ 0 & d\end{pmatrix}
+    \begin{pmatrix}1 & -d^{-1}b\\ 0 & 1\end{pmatrix}
+    = \begin{pmatrix}a & 0\\ 0 & d\end{pmatrix}.
+\]
+
+\subsection{Weak Modular Functions}\label{Sec:MF_weak}
+\begin{definition}\label{Def:MF_automorphy}
+    For $g = \begin{pmatrix}a & b\\ c & d\end{pmatrix} \in \SL_2(\bbZ)$ and $z \in \calH$, the \termino{factor of automorphy} is
+    \[
+        j(g, z) = cz + d \in \bbC^\times.
+    \]
+\end{definition}
+\begin{definition}\label{Def:MF_slash}
+    For $g \in \SL_2(\bbZ)$ and $k \in \bbZ$, the weight-$k$ operator $[g]_k$ associates to a function $f : \calH \to \bbC$ the function $f[g]_k : \calH \to \bbC$ defined by
+    \[
+        (f[g]_k)(z) = j(g, z)^{-k}f(gz), \qquad z \in \calH.
+    \]
+\end{definition}
+
+\begin{lemma}\label{Lem:MF_slash}
+    Let $g, g' \in \SL_2(\bbZ)$, $z \in \calH$, and $f : \calH \to \bbC$. For every $k \in \bbZ$, the following identities hold:
+    \begin{enumerate}[label=(\arabic*)]
+        \item $j(gg', z) = j(g, g'z)\,j(g', z)$.
+        \item $f[gg']_k = (f[g]_k)[g']_k$.
+        \item $\displaystyle\frac{d}{dz}(gz) = \frac{1}{j(g, z)^2}$.
+    \end{enumerate}
+\end{lemma}
+These three identities can be verified by direct calculation and are left as an exercise.
+
+\begin{definition}\label{Def:MF_weak}
+    Let $\Gamma$ be a congruence subgroup and let $k \in \bbZ$. A function $f : \calH \to \bbC$ is \termino{weakly modular of weight $k$} if
+    \begin{enumerate}[label=(\arabic*)]
+        \item $f$ is meromorphic;
+        \item $f[\gamma]_k = f$ for every $\gamma \in \Gamma$.
+    \end{enumerate}
+\end{definition}
+\begin{remarkstar}
+    By \lemref{Lem:MF_denominator}, $j(g, z)$ is nonzero on the upper half-plane. Hence if $f$ is meromorphic, then $f[g]_k$ is also meromorphic.
+\end{remarkstar}
+
+\begin{remark}
+    When $k = 0$, the weak modularity condition is $f(\gamma z) = f(z)$ for every $\gamma \in \Gamma$. In other words, $f$ is a $\Gamma$-invariant meromorphic function. In particular, constant functions are weakly modular of weight $0$.
+\end{remark}
+
+\begin{remark}
+    If $ - I = \begin{pmatrix} - 1 & 0\\ 0 & - 1\end{pmatrix} \in \Gamma$ and $f$ is weakly modular of weight $k$ with respect to $\Gamma$, then
+    \[
+        f(z) = (f[-I]_k)(z) = (-1)^{-k}f(z).
+    \]
+    Thus if $k$ is odd, then $f \equiv 0$.
+\end{remark}
+
+\begin{remark}\label{Rmk:MF_period}
+    By the definition of a congruence subgroup, there exists $N \geqslant 1$ such that $\Gamma(N) \subseteq \Gamma$. In particular,
+    \[
+        \begin{pmatrix}1 & N\\ 0 & 1\end{pmatrix} \in \Gamma.
+    \]
+    Hence there exists a least positive integer $h$ such that
+    \[
+        \gamma_h = \begin{pmatrix}1 & h\\ 0 & 1\end{pmatrix} \in \Gamma.
+    \]
+    If $f$ is weakly modular of weight $k$ with respect to $\Gamma$, then
+    \[
+        f(z) = (f[\gamma_h]_k)(z) = (0z + 1)^{-k}f(\gamma_hz) = f(z + h).
+    \]
+    Thus $f$ is $h\bbZ$-periodic. We will use this when introducing $q$-expansions.
+\end{remark}
+
+\begin{remark}
+    Suppose that the congruence subgroup $\Gamma = \langle\gamma_1, \cdots, \gamma_n\rangle$.
+    
+    By \lemref{Lem:MF_slash}(2), to check weak modularity for a meromorphic function $f$, it suffices to verify
+    \[
+        f[\gamma_i]_k = f, \qquad i = 1, \cdots, n,
+    \]
+    These conditions imply that $f$ is weakly modular of weight $k$ with respect to $\Gamma$. Indeed, every element of $\Gamma$ is a product of generators and their inverses, and the composition law shows that invariance under the generators implies invariance under their inverses and all such products.
+\end{remark}
+
+\begin{example}
+    $\SL_2(\bbZ)$ is generated by the following two matrices:
+    \[
+        S = \begin{pmatrix}0 & - 1\\ 1 & 0\end{pmatrix}, \qquad
+        T = \begin{pmatrix}1 & 1\\ 0 & 1\end{pmatrix}.
+    \]
+    Hence a meromorphic function $f : \calH \to \bbC$ satisfying $f[S]_k = f$ and $f[T]_k = f$ is weakly modular of weight $k$ with respect to $\SL_2(\bbZ)$. Explicitly, these two conditions are
+    \[
+        f(z) = z^{-k}f(-1/z), \qquad f(z + 1) = f(z)(\bbZ\text{-periodic}).
+    \]
+\end{example}
+
+\begin{lemma}\label{Lem:MF_conjugation}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item If $\Gamma$ is a congruence subgroup and $\alpha \in \SL_2(\bbZ)$, then $\alpha^{-1}\Gamma\alpha$ is a congruence subgroup.
+        \item If $f$ is weakly modular of weight $k$ with respect to $\Gamma$ and $\alpha \in \SL_2(\bbZ)$, then $f[\alpha]_k$ is weakly modular of weight $k$ with respect to $\alpha^{-1}\Gamma\alpha$.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item Let $\Gamma(N) \subseteq \Gamma$. Since $\Gamma(N) \trianglelefteq \SL_2(\bbZ)$,
+        \[
+            \Gamma(N) = \alpha^{-1}\Gamma(N)\alpha \subseteq \alpha^{-1}\Gamma\alpha.
+        \]
+        \item By definition and \lemref{Lem:MF_slash}(2),
+        \[
+            (f[\alpha]_k)[\alpha^{-1}\gamma\alpha]_k
+            = f[\alpha\alpha^{-1}\gamma\alpha]_k
+            = f[\gamma\alpha]_k
+            = (f[\gamma]_k)[\alpha]_k = f[\alpha]_k
+        \]
+        for $\gamma \in \Gamma$.
+    \end{enumerate}
+\end{proof}
+
+\subsection{Cusps}\label{Sec:MF_cusps}
+Put $X = \bbQ \cup \{\infty\} = \bbP^1(\bbQ)$. Since $\SL_2(\bbZ)$ stabilizes $X$, its action on $X$ is well-defined. We call the $\Gamma$-orbits in $X$ the \termino{cusps} of $\Gamma$.
+
+Let $\Gamma$ be a congruence subgroup. For $x \in X$, its \termino{$\Gamma$-orbit} is
+\[
+    \Gamma \cdot x = \{\gamma x : \gamma \in \Gamma\}.
+\]
+We write $x \sim _{\Gamma}y$ if $y = \gamma x$ for some $\gamma \in \Gamma$, and denote the corresponding orbit (equivalence class) by $[x]_{\Gamma} = \Gamma \cdot x$.
+
+\begin{definition}\label{Def:MF_cusps}
+    The \termino{set of cusps} of $\Gamma$ is the orbit set
+    \[
+        \Gamma \backslash X
+        = \Gamma \backslash \bigl(\bbQ \cup \{\infty\}\bigr)
+        = \{[x]_{\Gamma} : x \in X\}.
+    \]
+\end{definition}
+
+\begin{lemma}\label{Lem:MF_cusps}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item $\SL_2(\bbZ) \backslash X = \{[\infty]_{\SL_2(\bbZ)}\}$.
+        \item The set of cusps $\Gamma \backslash X$ is finite.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item Let $x = a/c \in \bbQ$, with $a, c \in \bbZ$ and $\gcd(a, c) = 1$. By B\'ezout's identity there are $b, d \in \bbZ$ such that $ad - bc = 1$. Hence
+        \[
+            \gamma = \begin{pmatrix}a & b\\ c & d\end{pmatrix}
+            \in \SL_2(\bbZ), \qquad \gamma\infty = \frac ac = x.
+        \]
+        The point $\infty$ itself is in its own orbit, so every element of $X$ is in the orbit of $\infty$.
+
+        \item Put $G = \SL_2(\bbZ)$. Since $\Gamma$ is a
+        congruence subgroup, there exists $N \ge 1$ with $H \defeq \Gamma(N) \subseteq \Gamma$. By \propref{Prop:MF_principal_index}, $H \trianglelefteq G$ and $G/H$ is finite. Write $\overline{g} = gH \in G/H$ and $[x]_H = H \cdot x \in H \backslash X$. The group $G/H$ acts on the $H$-orbit space $H \backslash X$ via
+        \[
+            \overline{g} \cdot [x]_H \defeq [gx]_H.
+        \]
+        This is well-defined because $H$ is normal in $G$. Taking orbits in two stages gives
+        \[
+            (G/H) \backslash (H \backslash X) \cong G \backslash X
+            = \{[\infty]_G\}.
+        \]
+        Thus the finite group $G/H$ acts transitively on $H \backslash X$; in particular,
+        \[
+            |H \backslash X| \le |G/H| < \infty.
+        \]
+        Since $H \subseteq \Gamma$, there is a natural surjection $H \backslash X \twoheadrightarrow \Gamma \backslash X$, so
+        \[
+            |\Gamma \backslash X| < \infty.
+        \]
+    \end{enumerate}
+\end{proof}
+
+Let
+\[
+    D = \{q \in \bbC : |q| < 1\}, \qquad D' = D \setminus \{0\}
+\]
+be the \termino{open complex unit disk} and the \termino{punctured open complex unit disk}, respectively. Let $h \in \bbN_{ > 0}$. The function
+\[
+    q_h : \calH \longrightarrow D', \qquad
+    z \longmapsto q_h(z) = e^{2\pi iz/h}
+\]
+is $h\bbZ$-periodic.
+
+Let $f : \calH \to \bbC$ be an $h\bbZ$-periodic function. Since $q_h$ identifies $\calH/h\bbZ$ with $D'$, the function $f$ factors through $q_h$: there is a function $\widetilde f : D' \to \bbC$ such that
+\[
+    f(z) = \widetilde f(q_h(z)).
+\]
+
+\begin{definition}\label{Def:MF_at_infinity}
+    We say that $f$ is \termino{meromorphic} (respectively, \termino{holomorphic}) \termino{at $\infty$} if $\widetilde f$ extends meromorphically (respectively, holomorphically) across $0 \in D$.
+\end{definition}
+
+If $f$ is meromorphic at $\infty$, then $\widetilde f$ has a Laurent expansion at $0$. Thus $f$ has a \termino{Fourier expansion} (or \termino{$q_h$-expansion})
+\[
+    \boxed{f(z) = \sum_{n = - m}^{\infty}a(n)\,q_h(z)^n, \qquad m \ge 0, }
+\]
+valid for $\Im(z)$ sufficiently large. In the holomorphic case there are no negative powers (we can take $m = 0$), and
+\[
+    f(\infty) \defeq \widetilde f(0) = a(0).
+\]
+
+\subsection{Modular Forms}\label{Sec:MF_forms}
+\begin{definition}\label{Def:MF_modular_form}
+    Let $k \in \bbZ$ and let $\Gamma$ be a congruence subgroup. A \termino{modular form of weight $k$} with respect to $\Gamma$ is a function $f : \calH \to \bbC$ such that
+    \begin{enumerate}[label=(\arabic*)]
+        \item $f$ is holomorphic on $\calH$;
+        \item $f$ is weakly modular of weight $k$ with respect to $\Gamma$;
+        \item for every $\alpha \in \SL_2(\bbZ)$, the function $f[\alpha]_k$ is holomorphic at $\infty$.
+    \end{enumerate}
+\end{definition}
+\begin{definition}\label{Def:MF_cusp_form}
+    A modular form of weight $k$ with respect to $\Gamma$ is a \termino{cusp form} if
+    \[
+        \forall\alpha \in \SL_2(\bbZ), \qquad (f[\alpha]_k)(\infty) = 0.
+    \]
+\end{definition}
+
+\begin{remark}
+    Condition (3) of \defref{Def:MF_modular_form} only needs to be checked for finitely many $\alpha$. Indeed, the congruence subgroup $\Gamma$ has finite index. Choose representatives $\alpha_1, \cdots, \alpha_r$ of the left-coset space $\Gamma \backslash \SL_2(\bbZ)$. Every $\alpha \in \SL_2(\bbZ)$ can be written as $\alpha = \gamma\alpha_i$ with $\gamma \in \Gamma$. By \lemref{Lem:MF_slash}(2),
+    \[
+        f[\alpha]_k = f[\gamma\alpha_i]_k = (f[\gamma]_k)[\alpha_i]_k = f[\alpha_i]_k.
+    \]
+    Thus it suffices to check that each $f[\alpha_i]_k$ is holomorphic at $\infty$.
+\end{remark}
+
+\begin{example}
+    Equipped with the usual sum $f + f'$ and scalar multiplication $uf$ ($u \in \bbC$), the set of modular forms of weight $k$ with respect to $\Gamma$ forms a $\bbC$-vector space, denoted
+    \[
+        \mathcal{M}_k(\Gamma).
+    \]
+    The subset of cusp forms is a $\bbC$-vector subspace of $\mathcal{M}_k(\Gamma)$, denoted
+    \[
+        \calS_k(\Gamma).
+    \]
+    Moreover, the usual pointwise product of functions induces a graded-ring structure on
+    \[
+        \mathcal{M}(\Gamma) \defeq \bigoplus_{k \in \bbZ}\mathcal{M}_k(\Gamma),
+    \]
+    and
+    \[
+        \calS(\Gamma) \defeq \bigoplus_{k \in \bbZ}\calS_k(\Gamma)
+    \]
+    defines an ideal of $\mathcal{M}(\Gamma)$.
+
+\end{example}
+
+\subsection{Eisenstein Series}\label{Sec:MF_Eisenstein}
+\begin{definition}
+    Let $k > 2$ be an even integer. The \termino{Eisenstein series of weight $k$} is the function
+    \[
+        G_k : \calH \to \bbC, \quad z \mapsto \sum_{(c, d) \in \bbZ^2 \setminus \{(0, 0)\}} \frac{1}{(cz + d)^k}.
+    \]
+    We write $\sideset{}{'}\sum_{(c, d)}$ for a sum over all $(c, d) \in \bbZ^2 \setminus \{(0, 0)\}$.
+\end{definition}
+
+\begin{proposition}\label{Prop:MF_Eisenstein}
+    Let $k > 2$ be an even integer. Then $G_k \in \mathcal{M}_k(\SL_2(\bbZ))$.
+\end{proposition}
+
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item $G_k$ is holomorphic on $\calH$.
+        We prove absolute convergence on $\calH$ and uniform convergence on each region
+        \[
+            \Omega(A, B) \defeq \{z = x + iy \in \calH \mid |x| \leqslant A,\ y \geqslant B\}, \quad A, B > 0.
+        \]
+        We seek a constant $K > 0$, depending only on $A$ and $B$, such that
+        \begin{equation}\label{eq:MF_Eisenstein_bound}
+            |cz + d|^2 \geqslant K|ci + d|^2 = K(c^2 + d^2)
+        \end{equation}
+        for every $z \in \Omega(A, B)$ and $(c, d) \neq (0, 0)$. Take
+        \[
+            K = \frac{B^2}{1 + (A + B)^2} < 1.
+        \]
+        If $c = 0$, \eqref{eq:MF_Eisenstein_bound} follows from $K < 1$. If $c \neq 0$, put $\lambda = d/c$. It suffices to show that
+        \[
+            \frac{(\lambda + x)^2 + y^2}{1 + \lambda^2} \geqslant K.
+        \]
+        \begin{enumerate}[label=\textbf{Case~\arabic*}]
+            \item $|\lambda| \leqslant A + B$.
+            Since $y \geqslant B$,
+            \[
+                \frac{(\lambda + x)^2 + y^2}{1 + \lambda^2} \geqslant \frac{B^2}{1 + (A + B)^2} = K.
+            \]
+            \item $|\lambda| > A + B$.
+            We have
+            \[
+                \left|\frac{x}{\lambda}\right| \leqslant \frac{A}{|\lambda|} < \frac{A}{A + B} < 1.
+            \]
+            By the reverse triangle inequality,
+            \[
+                \left|1 + \frac{x}{\lambda}\right| \geqslant 1 - \left|\frac{x}{\lambda}\right| > \frac{B}{A + B}.
+            \]
+            % The board's next intermediate line omits an absolute value on lambda; correction pending confirmation. The squared estimate below is stated on the board.
+            Hence
+            \[
+                \frac{(\lambda + x)^2 + y^2}{1 + \lambda^2} \geqslant \frac{B^2}{(A + B)^2}\frac{\lambda^2}{1 + \lambda^2}.
+            \]
+            The function $t \mapsto t/(1 + t)$ is increasing for $t \geqslant 0$, so
+            \[
+                \frac{\lambda^2}{1 + \lambda^2} \geqslant \frac{(A + B)^2}{1 + (A + B)^2}.
+            \]
+            Combining these inequalities gives the required lower bound $K$.
+        \end{enumerate}
+        By \eqref{eq:MF_Eisenstein_bound},
+        \[
+            \frac{1}{|cz + d|^k} \leqslant \frac{K^{-k/2}}{|ci + d|^k}.
+        \]
+        The series
+        \[
+            \sideset{}{'}\sum_{(c, d)} \frac{1}{|ci + d|^k} = \sideset{}{'}\sum_{(c, d)} \frac{1}{(c^2 + d^2)^{k/2}}
+        \]
+        converges for $k > 2$; this is left as an exercise. The Weierstrass M-test gives absolute and uniform convergence on $\Omega(A, B)$. Every compact subset of $\calH$ is contained in some $\Omega(A, B)$, and each summand is holomorphic by \lemref{Lem:MF_denominator}. Therefore $G_k$ is holomorphic on $\calH$.
+
+        \item $G_k$ is weakly modular of weight $k$ with respect to $\SL_2(\bbZ)$.
+        Let $g = \begin{pmatrix}\alpha & \beta\\ \gamma & \delta\end{pmatrix} \in \SL_2(\bbZ)$. Then
+        \[
+            \begin{aligned}
+                G_k(gz) &= \sideset{}{'}\sum_{(c, d)} \frac{1}{\left(c\frac{\alpha z + \beta}{\gamma z + \delta} + d\right)^k}\\
+                &= (\gamma z + \delta)^k\sideset{}{'}\sum_{(c, d)} \frac{1}{((c\alpha + d\gamma)z + (c\beta + d\delta))^k}.
+            \end{aligned}
+        \]
+        The map
+        \[
+            \bbZ^2 \setminus \{(0, 0)\} \to \bbZ^2 \setminus \{(0, 0)\}, \quad (c, d) \mapsto (c, d)g = (c\alpha + d\gamma, c\beta + d\delta)
+        \]
+        is a bijection with inverse $(c, d) \mapsto (c, d)g^{-1}$. By absolute convergence, we may reindex the sum, obtaining
+        \[
+            G_k(gz) = (\gamma z + \delta)^kG_k(z),
+        \]
+        i.e. $G_k[g]_k = G_k$.
+
+        \item $G_k$ is holomorphic at $\infty$.
+        By (2), $G_k(z + 1) = G_k(z)$. Hence $G_k$ induces a holomorphic function $\widetilde G_k$ on the punctured unit disk through $q = e^{2\pi iz}$. It suffices to show that $\widetilde G_k$ is bounded near $q = 0$.
+
+        Fix $B > 0$. By (1), $G_k$ is bounded on $\Omega(1, B)$ by the finite constant
+        \[
+            K^{-k/2}\sideset{}{'}\sum_{(c, d)} \frac{1}{|ci + d|^k}.
+        \]
+        By periodicity, every $z$ with $\Im(z) \geqslant B$ can be translated into $\Omega(1, B)$ without changing $G_k(z)$. Thus $\widetilde G_k$ is bounded for $0 < |q| \leqslant e^{-2\pi B}$ and extends holomorphically across $q = 0$ by the removable singularity theorem. Finally, $G_k[\alpha]_k = G_k$ for every $\alpha \in \SL_2(\bbZ)$, so all the conditions in \defref{Def:MF_modular_form} hold.
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}[Fourier Expansion]\label{Prop:MF_Eisenstein_Fourier}
+    Let $k > 2$ be an even integer and $q = e^{2\pi iz}$. Then
+    \[
+        G_k(z) = 2\zeta(k) + \frac{2(2\pi i)^k}{(k - 1)!}\sum_{n = 1}^{\infty}\sigma_{k - 1}(n)q^n,
+    \]
+    where
+    \[
+        \zeta(k) = \sum_{m = 1}^{\infty}\frac{1}{m^k}, \qquad \sigma_{k - 1}(n) = \sum_{\substack{m \mid n\\m > 0}}m^{k - 1}.
+    \]
+\end{proposition}
+
+\begin{proof}
+    \leavevmode
+    \begin{enumerate}[label=\textit{Step~\arabic*.}]
+        \item We use the identities
+        \[
+            \pi\cot(\pi z) = \pi\frac{\cos(\pi z)}{\sin(\pi z)} = \frac{1}{z} + \sum_{m = 1}^{\infty}\left(\frac{1}{z + m} + \frac{1}{z - m}\right).
+        \]
+        The partial fraction expansion is quoted here; its justification is deferred to a later lecture. For $z \in \calH$, $|q| < 1$, and the exponential formulas for sine and cosine give
+        \[
+            \begin{aligned}
+                \pi\cot(\pi z) &= i\pi\frac{q + 1}{q - 1} = -i\pi\frac{1 + q}{1 - q}\\
+                &= -i\pi(1 + q)\sum_{n = 0}^{\infty}q^n = i\pi - 2\pi i\sum_{n = 0}^{\infty}q^n.
+            \end{aligned}
+        \]
+        Differentiating $k - 1$ times yields
+        \begin{equation}\label{eq:MF_cotangent_derivative}
+            \sum_{m \in \bbZ}\frac{1}{(m + z)^k} = \frac{(-2\pi i)^k}{(k - 1)!}\sum_{n = 1}^{\infty}n^{k - 1}q^n.
+        \end{equation}
+
+        \item Separate the terms with $c = 0$ and $c \neq 0$. Since $k$ is even,
+        \[
+            \begin{aligned}
+                G_k(z) &= \sum_{d \neq 0}\frac{1}{d^k} + \sum_{c \neq 0}\sum_{d \in \bbZ}\frac{1}{(cz + d)^k}\\
+                &= 2\zeta(k) + 2\sum_{c = 1}^{\infty}\sum_{d \in \bbZ}\frac{1}{(cz + d)^k}.
+            \end{aligned}
+        \]
+        By \eqref{eq:MF_cotangent_derivative} applied to $cz$,
+        \[
+            2\sum_{c = 1}^{\infty}\sum_{d \in \bbZ}\frac{1}{(cz + d)^k} = \frac{2(2\pi i)^k}{(k - 1)!}\sum_{c = 1}^{\infty}\sum_{m = 1}^{\infty}m^{k - 1}q^{cm}.
+        \]
+        Grouping equal powers of $q$ gives
+        \[
+            \sum_{c = 1}^{\infty}\sum_{m = 1}^{\infty}m^{k - 1}q^{cm} = \sum_{n = 1}^{\infty}\left(\sum_{\substack{m \mid n\\m > 0}}m^{k - 1}\right)q^n = \sum_{n = 1}^{\infty}\sigma_{k - 1}(n)q^n.
+        \]
+        This proves the formula.
+    \end{enumerate}
+\end{proof}
+
+\subsection{The Discriminant and the Modular Invariant}\label{Sec:MF_discriminant}
+\begin{definition}
+    Define
+    \[
+        g_2(z) \defeq 60G_4(z), \qquad g_3(z) \defeq 140G_6(z).
+    \]
+    The \termino{discriminant function} is
+    \[
+        \Delta : \calH \to \bbC, \quad z \mapsto g_2(z)^3 - 27g_3(z)^2.
+    \]
+\end{definition}
+
+Since $G_4 \in \mathcal{M}_4(\SL_2(\bbZ))$, $G_6 \in \mathcal{M}_6(\SL_2(\bbZ))$ and $\mathcal{M}(\SL_2(\bbZ))$ is a graded ring, we have
+\[
+    \Delta \in \mathcal{M}_{12}(\SL_2(\bbZ)).
+\]
+
+\begin{remarkstar}
+    Using the expression for $\zeta(2k)$ in terms of Bernoulli numbers, verify that $\Delta(\infty) = 0$. Thus $\Delta \in \calS_{12}(\SL_2(\bbZ))$. This is left as an exercise.
+\end{remarkstar}
+
+\begin{remark}
+    We will later prove that $\Delta(z) \neq 0$ for every $z \in \calH$. In particular, $\Delta$ is a nonzero cusp form of weight $12$.
+\end{remark}
+
+\begin{definition}
+    The \termino{modular invariant} is the function
+    \[
+        j : \calH \to \bbC, \quad z \mapsto 1728\frac{g_2(z)^3}{\Delta(z)}.
+    \]
+\end{definition}
+
+\begin{remark}
+    Using the nonvanishing of $\Delta$ on $\calH$, the properties of $G_4$ and $\Delta$ show that $j$ is holomorphic on $\calH$ and invariant under $\SL_2(\bbZ)$. We will also see later that $j$ has a simple pole at $\infty$.
+\end{remark}
+
+\begin{remarkstar}
+    A goal of the course is to compute $\dim\mathcal{M}_k(\Gamma)$ and relate modular forms to the geometry of the modular curve $X(\Gamma)$, complex tori and elliptic curves.
+\end{remarkstar}
+

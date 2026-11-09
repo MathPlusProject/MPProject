@@ -1,0 +1,11 @@
+*.aux
+*.log
+*.bbl
+*.blg
+*.out
+*.gz
+*.synctex
+*.toc
+*.jpg
+*.png
+AGENTS.md
